@@ -5,6 +5,8 @@ class HighlightClip:
     end: int
     duration: int
     text: str
+    maxDb: int
+    avgDb: int
     priority: int
 
     def __init__(self,id,start,end,duration,text):

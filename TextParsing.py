@@ -14,6 +14,7 @@ def main():
     with open("/Users/andydong/Downloads/Soccer-Highlights/Soccermatch/Video.srt","r") as f:
         reader = srt.parse(f)
         for sub in reader:
+            id = sub.index
             start = sub.start.microseconds * 1000
             end = sub.end.microseconds * 1000
             duration = abs(start - end)
@@ -21,6 +22,8 @@ def main():
             print(start)
             print(end)
             print(duration)
+    HighlightClip(id,)
+
 
 
 class HighlightClip:

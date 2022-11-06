@@ -12,6 +12,7 @@ class Clip:
     end: int
     duration: int
     priority: int
+    audio_priority: int = 0
 
 
     def __init__(self,id,start,end,duration, priority):

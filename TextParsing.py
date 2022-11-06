@@ -5,26 +5,36 @@ from HighlightClip import Clip
 
 def main():
     """Opens the soccer video file and allows access to it's contents"""
-    with open("Soccermatch/captions.srt","r") as f:
+    with open("/Users/yuvraj/Documents/University Files/Fall 2022/Soccer-Highlights/Soccermatch/captions.srt","r") as f:
         reader = srt.parse(f)
-        map: dict[int, Clip] = {}
-        parse(reader)
+        clips: dict[int, Clip] = {}
+        
+        for sub in reader:
+            clip = parseHelper(sub)
+            clips[clip.getId()] = clip
 
-
-def parse(reader):
-    for sub in reader:
-            id = sub.index
-            start = round(sub.start.seconds, 1)
-            end = round(sub.end.seconds, 1)
-            duration = round(abs(start - end))
-
-            # If start and end timestamps are switched.
-            if start > end:
-                start, end = end, start
-
-            content = sub.content
-
+        f.close()
+    
+    print(clips[28].getStart())
             
+
+def parseHelper(sub):
+        id = sub.index
+        start = round(sub.start.seconds, 1)
+        end = round(sub.end.seconds, 1)
+        duration = round(abs(start - end))
+
+        # If start and end timestamps are switched.
+        if start > end:
+            start, end = end, start
+
+        content = sub.content
+
+        priority = priorityCheck(content)
+
+        return Clip(id, start, end, duration, priority)
+
+
 def priorityCheck(text) -> int:
     """Takes in a sentence and returns the priority."""
     keywords5 = ["goal", "stunning", "assist", "amazing", "rocket", "oh my go", "restarting", "foul", "injury", "brutal", "injured", "red card", "yellow card", "sent off", "free kick", "penalty","banger", "super", "penalty kick", "hat trick", "nutmeg", "amazing"]

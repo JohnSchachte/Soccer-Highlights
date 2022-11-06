@@ -24,4 +24,3 @@ def main():
             print(content)
         return start, end, duration, id
 
-main()

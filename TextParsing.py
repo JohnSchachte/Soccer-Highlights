@@ -9,6 +9,7 @@ duration: int
 content: str
 priority = 0
 
+
 def main():
     """Opens the soccer video file and allows access to it's contents"""
     with open("/Users/andydong/Downloads/Soccer-Highlights/Soccermatch/Video.srt","r") as f:

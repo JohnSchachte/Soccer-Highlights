@@ -6,6 +6,12 @@ from HighlightClip import Clip
 from audio import audioPriority
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "ffmpeg"
+from moviepy.editor import VideoFileClip, concatenate_videoclips
+
+PATH = "/Users/yuvraj/Documents/University Files/Fall 2022/Soccer-Highlights/VideoAssets/MatchVideo.mp4"
+video = VideoFileClip(PATH)
 
 def main():
     """Opens the soccer video file and allows access to it's contents"""
@@ -34,6 +40,10 @@ def main():
         totalTime += current.getDuration()
         clipList.append(current.getId())
         print(f"{current.getId()} : {current.getPriority()}")
+
+    print(clips, clipList)
+    makeVideo(clips, clipList)
+    
 
 def parseHelper(sub):
         id = sub.index
@@ -89,5 +99,13 @@ def wordExists(sentence, words) -> bool:
             return True
     return False
 
+
+def makeVideo(clips, clipList):
+    clipList.sort()
+    clip1 = video.subclip(clips[clipList[0]].getStart() - 7, clips[clipList[0]].getEnd())
+    clip2 = video.subclip(clips[clipList[2]].getStart(), clips[clipList[2]].getEnd())
+    clip3 = video.subclip(clips[clipList[3]].getStart() - 25, clips[clipList[3]].getEnd() - 17)
+    final = concatenate_videoclips([clip1,clip2,clip3])
+    final.write_videofile("highlights.mp4", audio_codec = 'aac')
 
 main()

@@ -2,7 +2,7 @@ import datetime
 import pysrt
 import srt 
 
-id = 0
+id: int
 start: int
 end: int
 duration: int
@@ -15,34 +15,13 @@ def main():
         reader = srt.parse(f)
         for sub in reader:
             id = sub.index
-            start = sub.start.microseconds * 1000
-            end = sub.end.microseconds * 1000
-            duration = abs(start - end)
+            start = round(sub.start.seconds, 1)
+            end = round(sub.end.seconds, 1)
+            duration = round(abs(start - end))
             content = sub.content
-            print(start)
-            print(end)
-            print(duration)
-    HighlightClip(id,)
+            print(id, start, end, duration)
+            print(content)
+        return start, end, duration, id
 
-
-
-class HighlightClip:
-    """a class to encapsulate the metrics of a highlight clip."""
-    id: int
-    start: int
-    end: int
-    duration: int
-    text: str
-    maxDb: int
-    avgDb: int
-    priority: int
-
-    def __init__(self,id,start,end,duration,text):
-        """"""
-        self.id = id
-        self.start = start
-        self.end = end
-        self.duration = duration
-        self.text = text
 
 main()

@@ -17,7 +17,7 @@ def main():
             id = sub.index
             start = round(sub.start.seconds, 1)
             end = round(sub.end.seconds, 1)
-            duration = round(abs(start - end))
+            duration = abs(start - end)
             content = sub.content
             print(id, start, end, duration)
             print(content)

@@ -1,22 +1,30 @@
 import datetime
 import srt 
-
+import heapq
+import queue as Q
 from HighlightClip import Clip
 
 def main():
+    pq = Q.PriorityQueue()
     """Opens the soccer video file and allows access to it's contents"""
-    with open("/Users/yuvraj/Documents/University Files/Fall 2022/Soccer-Highlights/Soccermatch/captions.srt","r") as f:
+    with open("Soccermatch/Y2Mate.is - FULL MATCH Real Madrid 2 - 3 Barça (2017) Me... (1).srt","r") as f:
         reader = srt.parse(f)
         clips: dict[int, Clip] = {}
         
         for sub in reader:
             clip = parseHelper(sub)
-            clips[clip.getId()] = clip
-
-        f.close()
-    
-    print(clips[28].getStart())
             
+            clips[clip.getId()] = clip
+            pq.put((clip.priority,clip.id,clip))
+        f.close()
+        print(clips[1].getPriority())
+    # print(clips[28].getStart())
+    totalTime: int = 0
+    while totalTime < 30:
+        current: Clip = pq.get()[2]
+        print(current)
+        totalTime += current.getDuration()
+        print(f"{current.getId()} : {current.getPriority()}")
 
 def parseHelper(sub):
         id = sub.index
@@ -37,27 +45,26 @@ def parseHelper(sub):
 
 def priorityCheck(text) -> int:
     """Takes in a sentence and returns the priority."""
-    keywords5 = ["goal", "stunning", "assist", "amazing", "rocket", "oh my go", "restarting", "foul", "injury", "brutal", "injured", "red card", "yellow card", "sent off", "free kick", "penalty","banger", "super", "penalty kick", "hat trick", "nutmeg", "amazing"]
-    keywords4 = []
-    keywords3 = []
+    keywords5: list[str] = ["goal", "assist", "injury", "injured", "red card", "yellow card", "sent off", "free kick", "penalty","banger", "penalty", "hat trick", "nutmeg","cross","shot","all alone",]
+    keywords4: list[str] = ["stunning","rocket","oh my go","foul","score","down the wing",]
+    keywords3: list[str] = ["amaz","brutal","restart","stun","shock","super","spectacular"]
     keywords2 = []
-    keywords1 = []  
-    text = "This was one heck of a goal."
+    keywords1 = []
     
     if wordExists(text, keywords5):
-        return 5
+        return -5
 
     elif wordExists(text, keywords4):
-        return 4
+        return -4
     
     elif wordExists(text, keywords3):
-        return 3
+        return -3
 
     elif wordExists(text, keywords2):
-        return 2
+        return -2
     
     elif wordExists(text, keywords1):
-        return 1
+        return -1
     
     else:
         return 0

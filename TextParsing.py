@@ -1,5 +1,4 @@
 import datetime
-import pysrt
 import srt 
 
 id: int

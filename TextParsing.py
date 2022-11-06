@@ -3,9 +3,11 @@ import srt
 import heapq
 import queue as Q
 from HighlightClip import Clip
+from audio import audioPriority
+import matplotlib.pyplot as plt
+import numpy as np
 
 def main():
-    pq = Q.PriorityQueue()
     """Opens the soccer video file and allows access to it's contents"""
     with open("Soccermatch/Y2Mate.is - FULL MATCH Real Madrid 2 - 3 Barça (2017) Me... (1).srt","r") as f:
         reader = srt.parse(f)
@@ -13,17 +15,24 @@ def main():
         
         for sub in reader:
             clip = parseHelper(sub)
-            
             clips[clip.getId()] = clip
-            pq.put((clip.priority,clip.id,clip))
+            
         f.close()
-        print(clips[1].getPriority())
-    # print(clips[28].getStart())
+
+    pq = Q.PriorityQueue()
+
+    for i in range(1, 1370):
+        clips[i].audio_priority = audioPriority(clips[i])
+        clips[i].priority -= clips[i].audio_priority
+        pq.put((clips[i].priority, clips[i].id, clips[i]))
+    
+    clipList = []
+
     totalTime: int = 0
     while totalTime < 30:
         current: Clip = pq.get()[2]
-        print(current)
         totalTime += current.getDuration()
+        clipList.append(current.getId())
         print(f"{current.getId()} : {current.getPriority()}")
 
 def parseHelper(sub):

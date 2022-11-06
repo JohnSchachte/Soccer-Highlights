@@ -14,7 +14,7 @@ class Clip:
     priority: int
 
 
-    def __init__(self,id,start,end,duration):
+    def __init__(self,id,start,end,duration, priority):
         """
         Instantiates the class.
         id = Unique identifier token for a particular clip.
@@ -30,6 +30,7 @@ class Clip:
         self.start = start      # Stores the start in seconds
         self.end = end          # Stores the end time of the clip in seconds.
         self.duration = duration
+        self.priority = priority
 
 
     def getId(self):

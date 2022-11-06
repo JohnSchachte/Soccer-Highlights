@@ -25,34 +25,5 @@ def main():
             #     break
             print(start, end)
         
-            
-
-class HighlightClip:
-    """a class to encapsulate the metrics of a highlight clip."""
-    id: int
-    start: int
-    end: int
-    duration: int
-    text: str
-    maxDb: int
-    avgDb: int
-    priority: int
-
-
-    def __init__(self,id,start,end,duration,text):
-        """Instantiates the class."""
-        self.id = id
-        self.start = start
-        self.end = end
-        self.duration = duration
-        self.text = text
-
-
-    def getDuration(self):
-        """Gives you the duration of the timestamp."""
-        return self.end - self.start
-
-
-    def 
 
 main()

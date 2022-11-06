@@ -1,6 +1,7 @@
 import datetime
 import srt 
 
+
 id: int
 start: int
 end: int
@@ -22,6 +23,5 @@ def main():
             print(id, start, end, duration)
             print(content)
         return start, end, duration, id
-
 
 main()

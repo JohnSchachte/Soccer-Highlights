@@ -14,7 +14,7 @@ class Clip:
     priority: int
 
 
-    def __init__(self,id,start,end,duration=end-start):
+    def __init__(self,id,start,end,duration):
         """
         Instantiates the class.
         id = Unique identifier token for a particular clip.

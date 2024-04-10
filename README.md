@@ -40,7 +40,7 @@ Welcome to the Soccer Highlight project! This machine learning algorithm is desi
 To start capturing highlights from your game clips, simply run the main script with the path to your video file:
 
 ```sh
-python highlight_capture.py --input path/to/your/video.mp4
+python HighlightClip.py --input path/to/your/video.mp4
 ```
 
 The script will process the video, identifying and extracting highlights based on audio spikes and scoreboard changes. The output will be a compilation of highlight segments saved to your specified directory.
